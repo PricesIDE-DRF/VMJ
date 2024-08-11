@@ -1,0 +1,1 @@
+java --module-path $1 -m $1
