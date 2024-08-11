@@ -77,7 +77,7 @@ public class PaymentImpl extends PaymentDecorator {
 
     public String toString() {
         return String.format(
-            "%s\nFrom %s currency to %s currency", 
+            "%s from %s currency to %s currency", 
             super.toString(), originCurrency.toUpperCase(), destinationCurrency.toUpperCase()
         );
     }
