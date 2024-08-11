@@ -30,27 +30,20 @@ public class Basic {
             String recipientCurrencyCode = in.next();
             System.out.print("Amount: ");
             int amount = Integer.parseInt(in.next());
-
+            
+            Payment core = PaymentFactory.createPayment(
+                "paymentgateway.payment.core.PaymentImpl",
+                senderAccountName, senderAccountNumber, recipientAccountName,
+                recipientAccountNumber, amount
+            )
             payment = PaymentFactory.createPayment(
                 "paymentgateway.payment.multicurrencysupport.PaymentImpl",
-                PaymentFactory.createPayment(
-                    "paymentgateway.payment.core.PaymentImpl",
-                    senderAccountName, senderAccountNumber, recipientAccountName,
-                    recipientAccountNumber, amount
-                ), senderCurrencyCode.toUpperCase(), recipientCurrencyCode.toUpperCase()
+                core, senderCurrencyCode.toUpperCase(), recipientCurrencyCode.toUpperCase()
             );
             payment.processPayment();
             
             process = processUserChoice();
         }
-        payment = PaymentFactory.createPayment(
-            "paymentgateway.payment.multicurrencysupport.PaymentImpl",
-            PaymentFactory.createPayment(
-                "paymentgateway.payment.core.PaymentImpl",
-                "kiki", "123", "nia", "456", 10000
-            ), "IDR", "USD"
-        );
-        payment.processPayment();
     }
 
     private static int processUserChoice() {
