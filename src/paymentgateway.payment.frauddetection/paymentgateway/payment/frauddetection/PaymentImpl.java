@@ -24,6 +24,6 @@ public class PaymentImpl extends PaymentDecorator {
     }
     
     public String toString() {
-        return super.toString();
+        return super.toString() + " with fraud detection";
     }
 }
