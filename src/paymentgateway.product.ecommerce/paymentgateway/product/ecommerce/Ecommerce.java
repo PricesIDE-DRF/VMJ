@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 
 public class Ecommerce {
     private static InputReader in;
-    private static Payment payment;
     
     public static void main(String[] args) {
         InputStream inputStream = System.in;
@@ -40,11 +39,11 @@ public class Ecommerce {
                 "paymentgateway.payment.multicurrencysupport.PaymentImpl",
                 core, senderCurrencyCode.toUpperCase(), recipientCurrencyCode.toUpperCase()
             );
-            payment = PaymentFactory.createPayment(
+            Payment fraudDetection = PaymentFactory.createPayment(
                 "paymentgateway.payment.frauddetection.PaymentImpl", 
                 multiCurrencySupport
             );
-            payment.processPayment();
+            fraudDetection.processPayment();
             
             process = processUserChoice();
         }

@@ -46,8 +46,7 @@ public class PaymentFactory {
         return record;
     }
 
-    public static boolean checkConfig(String fullyQualifiedName, Object base)
-    {
+    public static boolean checkConfig(String fullyQualifiedName, Object base) {
         boolean a = true;
         if (fullyQualifiedName.equals("paymentgateway.payment.localbank.PaymentImpl")) {
             String baseku = base.getClass().getCanonicalName();
