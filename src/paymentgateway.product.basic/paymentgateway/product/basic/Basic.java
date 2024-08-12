@@ -35,7 +35,7 @@ public class Basic {
                 "paymentgateway.payment.core.PaymentImpl",
                 senderAccountName, senderAccountNumber, recipientAccountName,
                 recipientAccountNumber, amount
-            )
+            );
             payment = PaymentFactory.createPayment(
                 "paymentgateway.payment.multicurrencysupport.PaymentImpl",
                 core, senderCurrencyCode.toUpperCase(), recipientCurrencyCode.toUpperCase()
