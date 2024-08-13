@@ -51,6 +51,9 @@ public class PaymentFactory {
         if (fullyQualifiedName.equals("paymentgateway.payment.localbank.PaymentImpl")) {
             String baseku = base.getClass().getCanonicalName();
             a = baseku.equals("paymentgateway.payment.multicurrencysupport.PaymentImpl");
+        } else if (fullyQualifiedName.equals("paymentgateway.payment.multicurrencywithlocalbank.PaymentImpl")) {
+            String baseku = base.getClass().getCanonicalName();
+            a = baseku.equals("paymentgateway.payment.multicurrencysupport.PaymentImpl");
         }
 
         return a;

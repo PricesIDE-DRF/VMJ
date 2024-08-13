@@ -1,19 +1,10 @@
 package paymentgateway.payment.localbank;
 
 import paymentgateway.payment.core.Payment;
-import paymentgateway.payment.core.PaymentDecorator;
+import paymentgateway.payment.localbank.DLocalBank;
 
-public class PaymentImpl extends PaymentDecorator {
+public class PaymentImpl extends DLocalBank {
     public PaymentImpl(Payment record) {
         super(record);
-    }
-
-    public void processPayment() {
-        super.record.processPayment();
-        System.out.println("Processing payment with Local Bank...");
-    }
-
-    public String toString() {
-        return super.toString() + " processing with local bank";
     }
 }

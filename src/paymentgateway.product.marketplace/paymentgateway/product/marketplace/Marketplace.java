@@ -40,7 +40,7 @@ public class Marketplace {
                 core, senderCurrencyCode.toUpperCase(), recipientCurrencyCode.toUpperCase()
             );
             Payment localBank = PaymentFactory.createPayment(
-                "paymentgateway.payment.localbank.PaymentImpl",
+                "paymentgateway.payment.multicurrencywithlocalbank.PaymentImpl",
                 multiCurrencySupport
             );
             Payment fraudDetection = PaymentFactory.createPayment(

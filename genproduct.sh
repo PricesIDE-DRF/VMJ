@@ -1,26 +1,23 @@
 #!/bin/bash
 set -e
 
-err() {
-    echo "Error: $*" >>/dev/stderr
-}
+source ./utils.sh
 
-function build_jar() {
-    if [ ! -f "$product/$1.jar" ]; then
-        javac -d classes --module-path $product $(find src/$1 -name "*.java") src/$1/module-info.java 
-        jar --create --file $product/$1.jar -C classes .
-        rm -r classes
-        echo "  $1.jar is created"
-    else 
-        echo "  $1.jar is ready"
+function check_configuration() {
+    if ! grep -q "^$1=" "$CK_FILE"; then
+        err "The configuration for $1 does not exist" && exit;
     fi
 }
 
 function check_module() {
-    if [ $1 == "paymentgateway.payment.multicurrencysupport" ]; then
-        cp external/gson.jar $product/
-        echo "  add external module gson"
+    value=$(grep "^$1=" "$CK_FILE" | cut -d'=' -f2)
+    count=$(echo "$value" | awk -F, '{print NF}')
+    if [ "$count" -gt 1 ]; then
+        sh ./genmodule.sh $1 $product
+        echo "  generate module $1"
     fi
+
+    check_external_module $1
 }
 
 function build_module() {
@@ -46,6 +43,7 @@ function build_product_requirement() {
     req=$(cat $targetpath | grep "requires \( transitive | static \)\?"| awk '{print $2}' | cut -d';' -f 1 )
     for reqprod in $req; do
         echo -e "building requirement for $mainclass: $reqprod"
+        check_configuration $reqprod
         check_module $reqprod
         build_jar $reqprod
     done
@@ -54,6 +52,7 @@ function build_product_requirement() {
     build_product
 }
 
+CK_FILE="ck.properties"
 product=$1
 mainclass=$2
 if [ -d "$1" ]; then 
@@ -70,7 +69,7 @@ if [ -z "$mainclass" ]; then
         err "Please specify the main class in the product" && exit;
     elif [ ! -d "src/$1" ]; then 
         err "module does not exist" && exit;
-    else build_module $product
+    else check_configuration $product; build_module $product
     fi
 else
     if [ ! -d "src/$1" ]; then  
